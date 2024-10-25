@@ -3,6 +3,13 @@ from django.views import View
 from django.utils import timezone
 from .models import Facture, User, Facture_Articles
 from .forms import CartForm  # You may want to create a form for submitting a cart
+import json
+
+
+
+class CartView(View):
+    def get(self, request):
+        return render(request, 'cart/cart.html', {'form': CartForm()})
 
 class UserFacturesView(View):
     def get(self, request):
@@ -20,37 +27,48 @@ class FactureDetailView(View):
 
 class SubmitCartView(View):
     def post(self, request):
-        # This view handles submitting the cart and creating a new facture
-        # Assuming you have a CartForm that gathers necessary information
-        form = CartForm(request.POST)
 
-        if form.is_valid():
-            # Create the new Facture
+        print('POST request received')
+
+        # Parse the articles from the request
+        articles = json.loads(request.POST.get('articles', '[]'))  # Load the articles from JSON
+
+        # Validate and process the data
+        if articles:  # Proceed only if articles are available
+            # Create the new Facture (make sure to adjust based on your form requirements)
             facture = Facture(
                 date_emission=timezone.now(),
-                id_delivery=form.cleaned_data['delivery'],
-                total_htc=0,  # Will calculate later
+                id_delivery=1,  # Replace with actual delivery ID logic
+                total_htc=0,
                 client_id=request.user
             )
             facture.save()
 
-            # Add articles from the cart to the Facture_Articles
-            articles = form.cleaned_data['articles']  # Assuming this is a list of articles with quantity
             total = 0
             for article in articles:
                 quantity = article['quantity']
+                # Assuming you have a method to retrieve the article by ID
+                article_instance = Article.objects.get(id=article['article'])  # Adjust based on your model
                 facture_article = Facture_Articles(
                     facture_id=facture,
-                    article_id=article['article'],  # Assuming this is the article instance
+                    article_id=article_instance,  # Assuming this is the article instance
                     quantity=quantity
                 )
                 facture_article.save()
-                total += article['article'].prix * quantity  # Calculate total
+                total += article_instance.prix * quantity  # Calculate total
 
             # Update total in the facture
-            facture.total_htc = total + facture.id_delivery.prix  # Adding delivery price
+            facture.total_htc = total  # Adjust based on your pricing logic
             facture.save()
 
             return redirect('cart:user_factures')  # Redirect to the factures list after submission
 
-        return render(request, 'cart/cart.html', {'form': form})  # Render the cart form again if invalid
+        return render(request, 'cart/cart.html', {'form': CartForm()})  # Render the cart form again if invalid
+
+    def get(self, request):
+        return render(request, 'cart/cart.html', {'form': CartForm()})   
+
+
+class CartDoneView(View):
+    def get(self, request):
+        return render(request, 'cart/cart_done.html')
