@@ -3,6 +3,20 @@
 
 {% block content %}
     <h1 class="text-center mb-5">Découvrez nos articles</h1>
+
+    <div class="mb-4">
+        <form method="get" class="d-inline-block">
+            <select name="categorie" class="form-select" onchange="this.form.submit()">
+                <option value="">Toutes les catégories</option>
+                {% for categorie in categories %}
+                    <option value="{{ categorie.id }}" {% if selected_category == categorie.id %}selected{% endif %}>
+                        {{ categorie.nom }}
+                    </option>
+                {% endfor %}
+            </select>
+        </form>
+    </div>
+    
     {% if is_empty %}
         <p>Aucun article trouvé.</p>
     {% else %}
