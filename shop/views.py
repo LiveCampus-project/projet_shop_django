@@ -5,9 +5,9 @@ from .models import Articles, Categories
 def article_list(request):
 
     categories = Categories.objects.all()
-    selected_category = request.GET.get('categories')
-    if selected_category:
-        articles = Articles.objects.filter(categories_id=selected_category)
+    categorie_id = request.GET.get('categorie_id')
+    if categorie_id:
+        articles = Articles.objects.filter(categorie_id=categorie_id)
     else:
         articles = Articles.objects.all()
         
@@ -15,7 +15,6 @@ def article_list(request):
     context = {
             'articles': articles,
             'categories': categories,
-            'selected_category': selected_category,
             'is_empty': is_empty,  
         }
     return render(request, 'shop/article_list.html', context)
