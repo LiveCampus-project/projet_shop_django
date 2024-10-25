@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Détails de la facture{% endblock %}
+
+{% block content %}
+    <h1 class="text-center mb-5">{{ article.nom }}</h1>
+    <p>Catégorie : {{ article.categorie.nom }}</p>
+    <p>Montant : {{ article.montant }}</p>
+    <p>{{ article.description }}</p>
+
+    <a href="#">Ajout</a> |
+
+{% endblock %}
