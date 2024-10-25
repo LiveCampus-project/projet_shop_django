@@ -1,18 +1,20 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import AbstractUser
+from .managers import UserManager
 
-from django.contrib.auth.models import User
 
 # Create your models here.
 
 
-class User(models.Model):
-    nom = models.CharField(max_length=100)
-    mail = models.EmailField()
-    password = models.CharField(max_length=100)
+class User(AbstractUser):
+    name = models.CharField("Name of User", blank=True, max_length=255)
+    email = models.EmailField("email address", unique=True)
+    username = None
+    USERNAME_FIELD = "email"
     adresse = models.CharField(max_length=100)
-    is_staff = models.BooleanField(default=False)
 
+    REQUIRED_FIELDS = []
+    objects = UserManager()
     def __str__(self):
         return self.nom
 

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Shop Django{% endblock %}</title>
+  </head>
+  <body>
+    <nav>
+      <ul>
+        {% if user.is_authenticated %}
+            <li>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit">Logout</button>
+                </form>
+            </li>
+        {% else %}
+            <li><a href="{% url 'login' %}">Login</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+
+    <div class="content">
+      {% block content %}
+      <!-- Contenu de chaque page -->
+      {% endblock %}
+    </div>
+
+    <footer>
+      <p>Django shop - 2024</p>
+    </footer>
+  </body>
+</html>
