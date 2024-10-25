@@ -1,0 +1,73 @@
+<div>
+  <h1 class="text-center mb-5">Your Cart</h1>
+  <div id="cart">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Article</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Cart items will be injected here -->
+      </tbody>
+    </table>
+
+    <form method="post" id="cartForm" action="{% url 'cart:submit_cart' %}">
+      {% csrf_token %}
+      <input type="hidden" name="articles" id="articlesInput" />
+      <button type="submit">Submit Cart</button>
+    </form>
+  </div>
+
+  <script>
+    // Fetch the cart from localStorage
+    const cartString = localStorage.getItem("cart");
+    const tbody = document.querySelector("#cart tbody");
+
+    try {
+      const cart = {
+        articles: [
+          { nom: "Guitar", price: 100, quantity: 2 },
+          { nom: "Piano", price: 500, quantity: 1 },
+          { nom: "Violin", price: 200, quantity: 3 },
+        ],
+      };
+      if (cart && cart.articles) {
+        const articles = cart.articles;
+
+        articles.forEach((article) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+              <td>${article.nom}</td>
+              <td>${article.price.toFixed(2)}</td>
+              <td>${article.quantity}</td>
+              <td>${(article.price * article.quantity).toFixed(2)}</td>
+            `;
+          tbody.appendChild(tr);
+        });
+
+        // Prepare articles data for submission
+        const articlesForSubmission = articles.map((article) => ({
+          article: article.id, // Ensure to use the correct property name for the article
+          quantity: article.quantity,
+        }));
+
+        // Set the serialized articles as a hidden input value
+        document.getElementById("articlesInput").value = JSON.stringify(
+          articlesForSubmission
+        );
+      } else {
+        console.error("Cart is empty or not found.");
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td colspan="4">Your cart is empty.</td>`;
+        tbody.appendChild(tr);
+      }
+    } catch (error) {
+      console.error("Failed to parse cart JSON:", error);
+      console.error("Cart string:", cartString);
+    }
+  </script>
+</div>
