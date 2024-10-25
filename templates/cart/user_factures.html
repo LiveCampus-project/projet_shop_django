@@ -1,0 +1,10 @@
+<h2>Your Invoices</h2>
+<ul>
+    {% for facture in factures %}
+        <li>
+            <a href="{% url 'cart:facture_detail' facture.id %}">{{ facture.date_emission }}</a> - Total: {{ facture.total_htc }}
+        </li>
+    {% empty %}
+        <li>No invoices found.</li>
+    {% endfor %}
+</ul>
