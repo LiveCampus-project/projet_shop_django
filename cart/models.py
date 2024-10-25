@@ -1,7 +1,17 @@
 from django.db import models
+from account.models import User
+from shop.models import Articles
 
-# Create your models here.
 
+
+class Delivery(models.Model):
+    delivery_system = models.CharField(max_length=100)
+    description = models.TextField()
+    prix = models.FloatField()
+    
+    def __str__(self):
+        return self.delivery_system
+    
 
 class Facture(models.Model):
     date_emission = models.DateField()
@@ -31,12 +41,4 @@ class Facture_Articles(models.Model):
         return self.facture_id
 
 
-
-class Delivery(models.Model):
-    delivery_system = models.CharField(max_length=100)
-    description = models.TextField()
-    prix = models.FloatField()
-    
-    def __str__(self):
-        return self.delivery_system
 

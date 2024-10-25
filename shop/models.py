@@ -2,6 +2,10 @@ from django.db import models
 
 # Create your models here.
 
+class Categories(models.Model):
+    nom = models.CharField(max_length=100, unique=True)
+    def __str__(self):
+        return self.nom        
 
 class Articles(models.Model):
     nom = models.CharField(max_length=100)
@@ -22,8 +26,3 @@ class Articles(models.Model):
            self.save()
            return self.stock
         
-
-class Categories(models.Model):
-    nom = models.CharField(max_length=100, unique=True)
-    def __str__(self):
-        return self.nom        
