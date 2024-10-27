@@ -5,6 +5,7 @@
     event.preventDefault();  
 
     const articleData = {
+        id: this.getAttribute("data-id"),
         nom: this.getAttribute("data-nom"),
         categorie: this.getAttribute("data-categorie"),
         prix: this.getAttribute("data-prix"),
@@ -45,7 +46,7 @@ function renderCartItems() {
     let totalCartPrice = 0;
 
     cart.forEach((article, index) => {
-        const { nom, prix, description, quantity = 1 } = article;
+        const { id , nom, prix, description, quantity = 1 } = article;
         const totalPrice = prix * quantity;
 
         // Add a row for each article in the cart
@@ -61,7 +62,7 @@ function renderCartItems() {
             </tr>
         `;
 
-        formArticlesData.push({ nom, prix, description, quantity });
+        formArticlesData.push({ id, nom, prix, description, quantity });
         totalCartPrice += totalPrice;
     });
 
