@@ -1,10 +1,23 @@
-<h2>Your Invoices</h2>
-<ul>
-    {% for facture in factures %}
-        <li>
-            <a href="{% url 'cart:facture_detail' facture.id %}">{{ facture.date_emission }}</a> - Total: {{ facture.total_htc }}
-        </li>
-    {% empty %}
-        <li>No invoices found.</li>
-    {% endfor %}
-</ul>
+{% extends 'base.html' %}
+
+{% block title %}Vos Factures{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-5">Vos Factures</h1>
+    <ul class="list-group">
+        {% for facture in factures %}
+            <li class="list-group-item">
+                <a href="{% url 'cart:facture_detail' facture.id %}" class="text-decoration-none">
+                    <strong>Date:</strong> {{ facture.date_emission }} - 
+                    <strong>Total:</strong> {{ facture.total_htc }} €
+                    <strong>System de livraison:</strong> {{ facture.id_delivery.delivery_system }}
+                </a>
+            </li>
+        {% empty %}
+            <li class="list-group-item text-center text-muted">Aucune facture trouvée.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}
