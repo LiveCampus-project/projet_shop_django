@@ -1,11 +1,23 @@
-<h2>Invoice Detail</h2>
-<p>Date: {{ facture.date_emission }}</p>
-<p>Total: {{ facture.total_htc }}</p>
-<h3>Articles</h3>
-<ul>
-    {% for article in facture.articles.all %}
-        <li>{{ article.article_id.nom }} - Quantity: {{ article.quantity }}</li>
-    {% empty %}
-        <li>No articles found in this invoice.</li>
-    {% endfor %}
-</ul>
+{% extends 'base.html' %}
+
+{% block title %}Détails de la facture{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-5">{{ article.nom }}</h1>
+    
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Détails des articles</h5>
+    
+            {% for article in facture_articles %}
+            <h6 class="card-subtitle mb-2 text-muted">{{ article.article_id.nom }}</h6>
+            <p class="card-text">Catégorie : {{ article.article_id.categorie_id.nom }}</p>
+            <p class="card-text">Montant : {{ article.article_id.prix }} €</p>
+            <hr>
+            {% endfor %}
+        </div>
+    </div>
+    
+</div>
+{% endblock %}

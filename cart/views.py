@@ -4,6 +4,7 @@ from django.utils import timezone
 from .models import Facture, User, Facture_Articles, Delivery  
 from shop.models import Articles  
 from .forms import CartForm  
+import json
 
 
 
@@ -21,7 +22,10 @@ class UserFacturesView(View):
 class FactureDetailView(View):
     def get(self, request, facture_id):
         facture = get_object_or_404(Facture, id=facture_id, client_id=request.user)
-        return render(request, 'cart/facture_detail.html', {'facture': facture})
+       
+        facture_articles = Facture_Articles.objects.filter(facture_id=facture_id)
+
+        return render(request, 'cart/facture_detail.html', {'facture': facture, 'facture_articles': facture_articles})
 
 
 class SubmitCartView(View):

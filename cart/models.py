@@ -38,7 +38,8 @@ class Facture_Articles(models.Model):
     quantity = models.IntegerField()
     
     def __str__(self):
-        return self.facture_id
+        return f"Facture {self.facture_id.id} - Article: {self.article_id.nom} (Quantity: {self.quantity})"
+
 
 
 
