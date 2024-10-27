@@ -8,6 +8,13 @@
     <p>Montant : {{ article.prix }} €</p>
     <p>{{ article.description }}</p>
 
-    <a href="#">Ajouter au panier</a> |
+    <!-- Add the article data to data-attributes for easy access -->
+    <a href="#" id="add-to-cart" 
+       data-nom="{{ article.nom }}" 
+       data-categorie="{{ article.categorie_id.nom }}" 
+       data-prix="{{ article.prix }}" 
+       data-description="{{ article.description }}">
+       Ajouter au panier
+    </a>
 
 {% endblock %}
