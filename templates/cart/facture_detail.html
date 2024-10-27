@@ -1,0 +1,11 @@
+<h2>Invoice Detail</h2>
+<p>Date: {{ facture.date_emission }}</p>
+<p>Total: {{ facture.total_htc }}</p>
+<h3>Articles</h3>
+<ul>
+    {% for article in facture.articles.all %}
+        <li>{{ article.article_id.nom }} - Quantity: {{ article.quantity }}</li>
+    {% empty %}
+        <li>No articles found in this invoice.</li>
+    {% endfor %}
+</ul>
