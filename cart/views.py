@@ -50,7 +50,7 @@ class SubmitCartView(View):
             for article in articles:
                 quantity = article['quantity']
                 # Assuming you have a method to retrieve the article by ID
-                article_instance = Articles.objects.get(id=article['article'])  # Adjust based on your model
+                article_instance = Articles.objects.get(id=article['id'])  # Adjust based on your model
                 facture_article = Facture_Articles(
                     facture_id=facture,
                     article_id=article_instance,  # Assuming this is the article instance
