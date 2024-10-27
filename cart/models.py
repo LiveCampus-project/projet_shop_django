@@ -21,7 +21,7 @@ class Facture(models.Model):
     
     
     def __str__(self):
-        return self.date
+        return f"Facture for {self.client_id.username} on {self.date_emission} - Total: {self.total_htc}"
 
     def get_total_htc(self):
         articles_price = Facture_Articles.objects.filter(facture_id=self.id)
