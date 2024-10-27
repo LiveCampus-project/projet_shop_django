@@ -1,5 +1,3 @@
-# cart/admin.py
-
 from django.contrib import admin
 from .models import Delivery, Facture, Facture_Articles
 

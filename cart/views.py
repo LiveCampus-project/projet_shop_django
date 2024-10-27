@@ -30,8 +30,6 @@ class FactureDetailView(View):
 
 class SubmitCartView(View):
     def post(self, request):
-        print('POST request received')
-
         articles = json.loads(request.POST.get('articles', '[]')) 
 
         delivery = Delivery.objects.get(id=1)  # get first delivery

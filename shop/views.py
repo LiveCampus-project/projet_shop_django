@@ -1,7 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Articles, Categories
 
-# Create your views here.
 def article_list(request):
 
     categories = Categories.objects.all()
